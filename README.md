@@ -19,7 +19,9 @@ Compile the code by running `make` and see the running options with `./dec --hel
 
 <a id="1">[1]</a> 
 Klairton Lima Brito, Géraldine Jean, Guillaume Fertin, Andre Rodrigues Oliveira, Ulisses Dias and Zanoni Dias. Sorting by genome rearrangements on both gene order and intergenic sizes. Journal of Computational Biology 2020;27(2):156–74.
+
 <a id="2">[2]</a> 
 Anne Bergeron, Julia Mixtacki and Jens Stoye. “Reversal Distance without Hurdles and Fortresses”. Combinatorial Pattern Matching. Berlin, Heidelberg: Springer.
+
 <a id="3">[3]</a> 
 Maria Emília M.T. Walter, Zanoni Dias and João Meidanis. “Reversal and transposition distance of linear chromosomes”. Proceedings of the String Processing and Information Retrieval: A South American Symposium (SPIRE’1998). Los Alamitos, CA, USA, 1998, pp. 96–102.
