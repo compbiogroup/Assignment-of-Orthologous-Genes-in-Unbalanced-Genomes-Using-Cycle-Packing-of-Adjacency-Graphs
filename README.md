@@ -6,8 +6,8 @@ The repository also presents the implementation of multiple algorithms to approx
 - A 3 asymptotic approximation algorithm for Sorting by Intergenic Transposition.
 - An 4-approximation algorithm for Sorting by Intergenic Reversal [[1]](#1).
 - An 4.5-approximation algorithm for Sorting by Intergenic Reversal and Transposition [[1]](#1).
-- An 2-approximation for Reversal and Indel Distance in signed strings. This algorithm uses an implementation of an exact algorithm for Sorting by Reversal [2](#2)
-- An heuristic for Reversal, Transposition and Indels Distance in signed strings. This algorithm uses an implementation of a 2-approximation algorithm for Sorting by Reversal and Transposition [3](#3)
+- An 2-approximation for Reversal and Indel Distance in signed strings. This algorithm uses an implementation of an exact algorithm for Sorting by Reversal [[2]](#2).
+- An heuristic for Reversal, Transposition and Indels Distance in signed strings. This algorithm uses an implementation of a 2-approximation algorithm for Sorting by Reversal and Transposition [[3]](#3).
 
 The algorithms can be applied to genomes with multiple genes, in that case random mappings of the genomes into permutations will be used to produce the distances.
 
