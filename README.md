@@ -1,4 +1,4 @@
-# Assignment of Orthologous Genes in Unbalanced Genomes Using Cycle Packing of Adjacency Graphs
+# Heuristics for Cycle Packing of Adjacency Graphs
 
 This repository has the implementation of two heuristics for the Adjacency Graph Packing problem described in the paper ``Assignment of Orthologous Genes in Unbalanced Genomes Using Cycle Packing of Adjacency Graphs". One is called Random Packings and tries to solve the problem by randomly generating cycle packings of the Adjacency Graph. The other is based on the Genetic Algorithm metaheuristic.
 
