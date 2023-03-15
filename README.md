@@ -1,6 +1,6 @@
-# Heuristics for Cycle Packing of Adjacency Graphs for Genomes with Repeated Genes
+# Heuristics for Cycle Packing of Adjacency Graphs
 
-This repository has the implementation of two heuristics for the Adjacency Graph Packing problem described in the paper ``Heuristics for Cycle Packing of Adjacency Graphs for Genomes with Repeated Genes". One is called Random Packings and tries to solve the problem by randomly generating cycle packings of the Adjacency Graph. The other is based on the Genetic Algorithm metaheuristic.
+This repository has the implementation of two heuristics for the Adjacency Graph Packing problem described in the paper ``Assignment of Orthologous Genes in Unbalanced Genomes Using Cycle Packing of Adjacency Graphs". One is called Random Packings and tries to solve the problem by randomly generating cycle packings of the Adjacency Graph. The other is based on the Genetic Algorithm metaheuristic.
 
 The repository also presents the implementation of multiple algorithms to approximate rearrangement distances between strings. The following algorithms are implemented:
 - A 3 asymptotic approximation algorithm for Sorting by Intergenic Transposition.
