@@ -30,7 +30,7 @@ struct Args {
 };
 
 void help(char *name) {
-  cout << "usage: Find a cicle decomposition for the breakpoint graph formed "
+  cout << "usage: Find a cycle decomposition for the breakpoint graph formed "
           "by the origin and target signed genomes."
        << endl
        << "\t" << name << " HEUR [OPTIONS]" << endl

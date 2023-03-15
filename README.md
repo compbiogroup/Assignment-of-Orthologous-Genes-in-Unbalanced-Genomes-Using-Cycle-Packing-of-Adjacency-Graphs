@@ -15,6 +15,10 @@ The algorithms can be applied to genomes with multiple genes, in that case rando
 
 Compile the code by running `make` and see the running options with `./dec --help` (for the cycle packing) or `./dist --help` (for the rearrangement distances). To use other algorithm when calculating the distances include a executable in the `external` folder and pass its name as the algorithm parameter. In that case, the executable should receive one instance as command line arguments (four coma separated lists) and produce the distance in the standard output.
 
+## Simulated Data
+
+The folder db has some simulated genomes, represented by pairs of strings.
+
 ## References
 
 <a id="1">[1]</a> 
