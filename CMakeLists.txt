@@ -34,19 +34,6 @@ target_compile_options(dist PRIVATE -Wall PRIVATE "${OpenMP_CXX_FLAGS}")
 target_link_libraries(dist PUBLIC ${CXX_FILESYSTEM_LIBRARIES} PRIVATE "${OpenMP_CXX_FLAGS}")
 
 #################################################################################################
-# dist_test
-#################################################################################################
-
-enable_testing()
-find_package(OpenMP REQUIRED)
-file(GLOB TEST quickcheck/quickcheck/*.hh)
-add_executable(dist_test test.cpp ${MISC} ${DIST} ${TEST} ${EXTER} ${CYCLE} ${HEUR} ${GRIMM})
-target_compile_options(dist_test PRIVATE -Wall PRIVATE "${OpenMP_CXX_FLAGS}")
-target_link_libraries(dist_test PUBLIC ${CXX_FILESYSTEM_LIBRARIES} PRIVATE "${OpenMP_CXX_FLAGS}")
-
-add_test(NAME dist_test COMMAND dist_test)
-
-#################################################################################################
 # decomposition
 #################################################################################################
 

@@ -5,20 +5,19 @@
 #include "misc/perm.h"
 #include "misc/list.h"
 #include "WalterBP/walter_bp.h"
+#include "Bergeron/bergeron.h"
 
 int dist(int *g1, int *g2, int size, int mod_) {
   Model mod = mod_;
   PermType type = PSign;
   int dist = -1;
-  perm *pi = (type == PSign && mod == Rev)
-    ? create_perm(size, type, mod)
-    : build_and_rename_perm(g1,g2,size,type, mod);
+  perm *pi = build_and_rename_perm(g1,g2,size,type, mod);
    
   if(mod == Rev) {
-		dist = bergeron(pi);
-	} else {
-    dist = walter_bp(pi);
-	}
+        dist = bergeron(pi);
+    } else {
+        dist = walter_bp(pi);
+    }
 
   print_ops(pi);
   clear_perm(pi);

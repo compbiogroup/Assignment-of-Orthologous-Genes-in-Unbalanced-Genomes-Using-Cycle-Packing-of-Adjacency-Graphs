@@ -69,16 +69,8 @@ void output(ostream &os, PermsIrs perms_irs) {
         os << perms_irs.s[i] << " ";
     }
     os << perms_irs.s[perms_irs.s_n - 1] << endl;
-    for (size_t i = 0; i < perms_irs.s_n - 2; i++) {
-        os << perms_irs.s_ir[i] << " ";
-    }
-    os << perms_irs.s_ir[perms_irs.s_n - 2] << endl;
     for (size_t i = 0; i < perms_irs.p_n - 1; i++) {
         os << perms_irs.p[i] << " ";
     }
     os << perms_irs.p[perms_irs.p_n - 1] << endl;
-    for (size_t i = 0; i < perms_irs.p_n - 2; i++) {
-        os << perms_irs.p_ir[i] << " ";
-    }
-    os << perms_irs.p_ir[perms_irs.p_n - 2] << endl;
 }

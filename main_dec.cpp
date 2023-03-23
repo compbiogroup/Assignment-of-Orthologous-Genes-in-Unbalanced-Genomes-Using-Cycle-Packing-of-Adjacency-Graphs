@@ -79,7 +79,6 @@ void get_args(Args &args, int argc, char *argv[]) {
                               {"extend", 0, NULL, 'e'},
                               {"all", 0, NULL, 'a'},
                               {"help", 0, NULL, 'h'},
-                              {"zero", 0, NULL, 'z'}
   };
 
   char op;
@@ -108,9 +107,6 @@ void get_args(Args &args, int argc, char *argv[]) {
         break;
       case 'a':
         args.all = true;
-        break;
-      case 'z':
-        args.fill_zero = true;
         break;
       default:
         help(argv[0]);
@@ -145,7 +141,7 @@ int main(int argc, char *argv[]) {
     input_lines.reset(read_lines(cin));
   }
 
-  int div = (args.fill_zero) ? 2 : 4;
+  int div = 2;
   try {
     if (input_lines->size() % div == 1) {
       throw invalid_argument("Number of lines is not multiple of 2.");
@@ -158,11 +154,7 @@ int main(int argc, char *argv[]) {
       int name_idx = i / div;
 
       InputData data;
-      if (args.fill_zero) {
-          data = input((*input_lines)[i], (*input_lines)[i + 1], args.extend);
-      } else {
-          data = input((*input_lines)[i], (*input_lines)[i + 1], (*input_lines)[i + 2], (*input_lines)[i + 3], args.extend);
-      }
+      data = input((*input_lines)[i], (*input_lines)[i + 1], args.extend);
       suboptimal_rule_interval(*data.g, *data.h);
       suboptimal_rule_pairs(*data.g, *data.h);
       cg = unique_ptr<CycleGraph>(new CycleGraph(*data.g, *data.h));
