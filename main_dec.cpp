@@ -22,7 +22,6 @@ struct Args {
   string output_folder;
   int iterations = 100;
   bool extend = false;
-  bool all = false;
   int tournament_size = 2;
   int mutation_rate = 50;
   int crossover_rate = 50;
@@ -58,8 +57,6 @@ void help(char *name) {
        << endl
        << "\t-e, --extend            whether to extend the genomes before "
           "apply the algorithm"
-       << endl
-       << "\t-a, --all               print all cycles" << endl
        << endl;
 
   exit(EXIT_SUCCESS);
@@ -77,7 +74,6 @@ void get_args(Args &args, int argc, char *argv[]) {
                               {"crossover", 1, NULL, 'c'},
                               {"tournament", 1, NULL, 't'},
                               {"extend", 0, NULL, 'e'},
-                              {"all", 0, NULL, 'a'},
                               {"help", 0, NULL, 'h'},
   };
 
@@ -105,9 +101,6 @@ void get_args(Args &args, int argc, char *argv[]) {
       case 'e':
         args.extend = true;
         break;
-      case 'a':
-        args.all = true;
-        break;
       default:
         help(argv[0]);
     }
@@ -120,6 +113,17 @@ void get_args(Args &args, int argc, char *argv[]) {
   if (n_pos_args != N_POS_ARGS) {
     help(argv[0]);
   }
+}
+
+CycleGraph *get_best_cg(CycleGraph *cg1, CycleGraph *cg2) {
+        if (cg1->dec_size() - cg1->potation() >
+            cg2->dec_size() - cg2->potation()) {
+            delete cg2;
+            return cg1;
+        } else {
+            delete cg1;
+            return cg2;
+        }
 }
 
 int main(int argc, char *argv[]) {
@@ -146,7 +150,7 @@ int main(int argc, char *argv[]) {
     if (input_lines->size() % div == 1) {
       throw invalid_argument("Number of lines is not multiple of 2.");
     }
-#pragma omp parallel for
+
     for (size_t i = 0; i < input_lines->size(); i += div) {
       Timer timer;
       ofstream os;
@@ -159,41 +163,20 @@ int main(int argc, char *argv[]) {
       suboptimal_rule_pairs(*data.g, *data.h);
       cg = unique_ptr<CycleGraph>(new CycleGraph(*data.g, *data.h));
 
-      if (args.output_folder != "" && args.all) {
-        os.open((args.output_folder / fs::path(args.input_file).filename())
-                    .string() +
-                string(5 - to_string(name_idx).size(), '0') +
-                to_string(name_idx) + "-all");
-      }
-
       if (args.heuristic == "rand") {
-        cg_aux.reset(new CycleGraph(*cg));
-        cg_aux->decompose_with_bfs(false);
-        cg_best = move(cg_aux);
-        if (args.all) {
-          output((args.output_folder != "") ? os : cout, *cg_aux,
-                 timer.since_last_mark());
-        }
+        CycleGraph *cg_rand = new CycleGraph(*cg);
+        cg_rand->decompose_with_bfs(false);
+
+#pragma omp declare reduction(select_cg : CycleGraph* : omp_out = get_best_cg(omp_in, omp_out))
+#pragma omp parallel for reduction(                                            \
+        select_cg                                                                  \
+        : cg_rand) // Process each decomposition in parallel
         for (int i = 1; i < args.iterations; ++i) {
-          timer.mark_time();
-          cg_aux.reset(new CycleGraph(*cg));
-          cg_aux->decompose_with_bfs(true);
-          if (args.all) {
-            output((args.output_folder != "") ? os : cout, *cg_aux,
-                   timer.since_last_mark());
-          }
-          if (cg_aux->dec_size() - cg_aux->potation() >
-              cg_best->dec_size() - cg_best->potation()) {
-            cg_best = move(cg_aux);
-          }
+          cg_rand = new CycleGraph(*cg);
+          cg_rand->decompose_with_bfs(true);
         }
       } else if (args.heuristic == "ga") {
         ostream *ga_os;
-        if (args.all) {
-          ga_os = (args.output_folder != "") ? &os : &cout;
-        } else {
-          ga_os = nullptr;
-        }
         int start = args.iterations / 10;
         if (start % 2 == 1) {
           start += 1;

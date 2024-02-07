@@ -60,6 +60,7 @@ class GA {
     this->generations = generations;
     this->os = os;
 
+#pragma omp parallel for // Create each chromosomes in parallel
     for (int i = 0; i < initial_size; ++i) {
       (*population)[i] = unique_ptr<Chromossome>(new Chromossome(*original));
       (*population)[i]->decompose_with_bfs(true);
@@ -81,21 +82,18 @@ class GA {
     /* int last_impr_gen = 0; */
 
     for (int g = 1; g <= generations; g++) {
-      bool improved = false;
+      /* bool improved = false; */
 
-      offsprings.reset(new Population());
-      for (int i = 1; i < population_size; i++) {
+      offsprings.reset(new Population(population_size));
+
+#pragma omp parallel for // Create each chromosomes in parallel
+      for (int i = 0; i < population_size; i++) {
         unique_ptr<Chromossome> &chr1 = (*population)[select_parent()];
         unique_ptr<Chromossome> &chr2 = (*population)[select_parent()];
-        offsprings->push_back(unique_ptr<Chromossome>(crossover(*chr1, *chr2)));
-        /* offsprings->push_back(unique_ptr<Chromossome>(crossover(*chr2, *chr1))); */
+        (*offsprings)[i] = unique_ptr<Chromossome>(crossover(*chr1, *chr2));
+        mutation((*offsprings)[i]);
       }
-      /* improved = improved || eval_population(offsprings); */
-
-      for (auto &chr : *offsprings) {
-        mutation(chr);
-      }
-      improved = improved || eval_population(offsprings, timer);
+      /* improved = improved || eval_population(offsprings, timer); */
 
       // Save new selected chromosomes in population and delete the old ones
       select_population(offsprings);
