@@ -82,7 +82,7 @@ class GA {
     /* int last_impr_gen = 0; */
 
     for (int g = 1; g <= generations; g++) {
-      /* bool improved = false; */
+      bool improved = false;
 
       offsprings.reset(new Population(population_size));
 
@@ -93,7 +93,7 @@ class GA {
         (*offsprings)[i] = unique_ptr<Chromossome>(crossover(*chr1, *chr2));
         mutation((*offsprings)[i]);
       }
-      /* improved = improved || eval_population(offsprings, timer); */
+      improved = improved || eval_population(offsprings, timer);
 
       // Save new selected chromosomes in population and delete the old ones
       select_population(offsprings);
